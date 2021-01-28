@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  List,
-  ListItem,
-  ListItemText,
 } from "@material-ui/core";
+import VehicleSpecification from "../Components/VehicleSpecification";
 
-const InformationModal = ({ isOpen, onClose, vehicles }) => {
-
-  console.log(vehicles);
+const InformationModal = ({ isOpen, onClose, vehicles, onSetErrorMessage }) => {
+  // console.log(vehicles);
 
   return (
     <React.Fragment>
@@ -26,14 +23,9 @@ const InformationModal = ({ isOpen, onClose, vehicles }) => {
           {"Specifications of starship"}
         </DialogTitle>
         <DialogContent>
-          {vehicles.map((ship, index) => (
-          <List component="nav" aria-label="specifications" key={index}>
-            <ListItem >
-              <ListItemText>{ship} </ListItemText>
-            </ListItem>
-          </List>
-
-          ))}
+          {vehicles.map((ship) => (
+              <VehicleSpecification onSetErrorMessage={onSetErrorMessage} apiVehicleUrl={ship} key={ship} id={ship} />
+            ))}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">

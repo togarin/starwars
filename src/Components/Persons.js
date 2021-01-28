@@ -9,13 +9,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Paper,
   IconButton,
 } from "@material-ui/core";
 import FlightTakeoffOutlinedIcon from "@material-ui/icons/FlightTakeoffOutlined";
 import InformationModal from "../Components/InformationModal";
 import axios from "axios";
+import {catchMessages} from '../utils'
 
 const useStyles = makeStyles({
   table: {
@@ -28,9 +28,8 @@ const DenseTable = () => {
   //   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [persons, setPersons] = useState([]);
-  const [informationModalOpen, setInformationModalOpen] = useState(false);
   const [count, setCount] = useState(1);
-  const [ships, setShips] = useState([]);
+  const [ships, setShips] = useState(null);
 
   const apiUrl = `https://swapi.dev/api/people/?page=`;
 
@@ -42,25 +41,12 @@ const DenseTable = () => {
         setPersons((persons) => [...persons, ...newHeros]);
         setErrorMessage("Верный запрос");
       } catch (error) {
-        catchMessages(error);
+        catchMessages(error, setErrorMessage);
       }
     };
     fetchPersons();
-  }, [count]);
+  }, [count, apiUrl]);
 
-  const catchMessages = (error) => {
-    if (error.response && error.response.status) {
-      if (error.response.status === 500) {
-        setErrorMessage("Cерверная ошибка");
-      } else if (error.response.status === 404) {
-        setErrorMessage("Cущность не найдена в системе");
-      } else if (error.response.status === 400) {
-        setErrorMessage("Неверный запрос");
-      } else if (error.response.status === 200) {
-        setErrorMessage("Верный запрос");
-      }
-    } else setErrorMessage(error.message);
-  };
 
   return (
     <React.Fragment>
@@ -79,23 +65,21 @@ const DenseTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {persons.map((person) => (
-              <TableRow key={person.name}>
+            {persons.map((person, index) => (
+              <TableRow key={index}>
                 <TableCell align="left">{person.name}</TableCell>
                 <TableCell align="right">{person.birth_year}</TableCell>
                 <TableCell align="right">{person.gender}</TableCell>
                 <TableCell align="right">
-                  <Tooltip title="Click for more info" placement="bottom-start">
                     <IconButton
+                        disabled={person.vehicles.length === 0}
                       onClick={() => {
-                        setInformationModalOpen(true);
                         setShips(person.vehicles);
                       }}
                     >
                       {" "}
                       <FlightTakeoffOutlinedIcon />{" "}
                     </IconButton>
-                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
@@ -105,13 +89,14 @@ const DenseTable = () => {
       <Button variant="outlined" onClick={() => setCount(count + 1)}>
         More heros
       </Button>
-      <InformationModal
+      {Boolean(ships) && <InformationModal
         vehicles={ships}
-        isOpen={informationModalOpen}
+        onSetErrorMessage={setErrorMessage}
+        isOpen
         onClose={() => {
-          setInformationModalOpen(false);
+          setShips(null);
         }}
-      />
+      />}
       <Snackbar
         anchorOrigin={{
           vertical: "top",
