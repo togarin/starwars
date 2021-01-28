@@ -15,7 +15,7 @@ import {
 import FlightTakeoffOutlinedIcon from "@material-ui/icons/FlightTakeoffOutlined";
 import InformationModal from "../Components/InformationModal";
 import axios from "axios";
-import {catchMessages} from '../utils'
+import { catchMessages } from "../utils";
 
 const useStyles = makeStyles({
   table: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 
 const DenseTable = () => {
   const classes = useStyles();
-  //   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [persons, setPersons] = useState([]);
   const [count, setCount] = useState(1);
@@ -46,7 +45,6 @@ const DenseTable = () => {
     };
     fetchPersons();
   }, [count, apiUrl]);
-
 
   return (
     <React.Fragment>
@@ -71,15 +69,15 @@ const DenseTable = () => {
                 <TableCell align="right">{person.birth_year}</TableCell>
                 <TableCell align="right">{person.gender}</TableCell>
                 <TableCell align="right">
-                    <IconButton
-                        disabled={person.vehicles.length === 0}
-                      onClick={() => {
-                        setShips(person.vehicles);
-                      }}
-                    >
-                      {" "}
-                      <FlightTakeoffOutlinedIcon />{" "}
-                    </IconButton>
+                  <IconButton
+                    disabled={person.vehicles.length === 0}
+                    onClick={() => {
+                      setShips(person.vehicles);
+                    }}
+                  >
+                    {" "}
+                    <FlightTakeoffOutlinedIcon />{" "}
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -89,14 +87,16 @@ const DenseTable = () => {
       <Button variant="outlined" onClick={() => setCount(count + 1)}>
         More heros
       </Button>
-      {Boolean(ships) && <InformationModal
-        vehicles={ships}
-        onSetErrorMessage={setErrorMessage}
-        isOpen
-        onClose={() => {
-          setShips(null);
-        }}
-      />}
+      {Boolean(ships) && (
+        <InformationModal
+          vehicles={ships}
+          onSetErrorMessage={setErrorMessage}
+          isOpen
+          onClose={() => {
+            setShips(null);
+          }}
+        />
+      )}
       <Snackbar
         anchorOrigin={{
           vertical: "top",

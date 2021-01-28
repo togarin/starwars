@@ -9,8 +9,6 @@ import {
 import VehicleSpecification from "../Components/VehicleSpecification";
 
 const InformationModal = ({ isOpen, onClose, vehicles, onSetErrorMessage }) => {
-  // console.log(vehicles);
-
   return (
     <React.Fragment>
       <Dialog
@@ -24,8 +22,13 @@ const InformationModal = ({ isOpen, onClose, vehicles, onSetErrorMessage }) => {
         </DialogTitle>
         <DialogContent>
           {vehicles.map((ship) => (
-              <VehicleSpecification onSetErrorMessage={onSetErrorMessage} apiVehicleUrl={ship} key={ship} id={ship} />
-            ))}
+            <VehicleSpecification
+              onSetErrorMessage={onSetErrorMessage}
+              apiVehicleUrl={ship}
+              key={ship}
+              id={ship}
+            />
+          ))}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">

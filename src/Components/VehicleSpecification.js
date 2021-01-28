@@ -1,29 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
 import axios from "axios";
-import {catchMessages} from '../utils'
-/*
-
-{
-    cargo_capacity: "4"
-    consumables: "1 day"
-    cost_in_credits: "8000"
-    created: "2014-12-18T11:20:04.625000Z"
-    crew: "1"
-    edited: "2014-12-20T21:30:21.693000Z"
-    films: ["http://swapi.dev/api/films/3/"]
-    length: "3"
-    manufacturer: "Aratech Repulsor Company"
-    max_atmosphering_speed: "360"
-    model: "74-Z speeder bike"
-    name: "Imperial Speeder Bike"
-    passengers: "1"
-    pilots: (2) ["http://swapi.dev/api/people/1/", "http://swapi.dev/api/people/5/"]
-    url: "http://swapi.dev/api/vehicles/30/"
-    vehicle_class: "speeder"
-}
-
-*/
+import { catchMessages } from "../utils";
 
 const VehicleSpecification = ({ apiVehicleUrl, onSetErrorMessage }) => {
   const [vehicle, setVehicle] = useState(null);
@@ -34,10 +12,8 @@ const VehicleSpecification = ({ apiVehicleUrl, onSetErrorMessage }) => {
         const response = await axios.get(`${apiVehicleUrl}`);
         const starShip = response.data;
         setVehicle(starShip);
-        console.log(starShip);
         onSetErrorMessage("Верный запрос");
       } catch (error) {
-
         catchMessages(error, onSetErrorMessage);
       }
     };
@@ -49,15 +25,15 @@ const VehicleSpecification = ({ apiVehicleUrl, onSetErrorMessage }) => {
   return (
     <List>
       <ListItem>
-        <ListItemText>{vehicle.name}</ListItemText>
+        <ListItemText>Марка: {vehicle.name}</ListItemText>
       </ListItem>
       <ListItem>
-        <ListItemText>{vehicle.model}</ListItemText>
+        <ListItemText>Модель: {vehicle.model}</ListItemText>
       </ListItem>
       <ListItem>
-        <ListItemText>{vehicle.manufacturer}</ListItemText>
+        <ListItemText>Производитель: {vehicle.manufacturer}</ListItemText>
       </ListItem>
-
+      <Divider />
     </List>
   );
 };
