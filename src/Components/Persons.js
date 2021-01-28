@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
+  Snackbar,
   Table,
   TableBody,
   TableCell,
@@ -29,6 +30,7 @@ const DenseTable = () => {
   const [persons, setPersons] = useState([]);
   const [informationModalOpen, setInformationModalOpen] = useState(false);
   const [count, setCount] = useState(1);
+  const [ships, setShips] = useState([]);
 
   const apiUrl = `https://swapi.dev/api/people/?page=`;
 
@@ -38,6 +40,7 @@ const DenseTable = () => {
         const response = await axios.get(apiUrl + `${count}`);
         const newHeros = response.data.results;
         setPersons((persons) => [...persons, ...newHeros]);
+        setErrorMessage("Верный запрос");
       } catch (error) {
         catchMessages(error);
       }
@@ -60,7 +63,7 @@ const DenseTable = () => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -83,7 +86,12 @@ const DenseTable = () => {
                 <TableCell align="right">{person.gender}</TableCell>
                 <TableCell align="right">
                   <Tooltip title="Click for more info" placement="bottom-start">
-                    <IconButton onClick={() => setInformationModalOpen(true)}>
+                    <IconButton
+                      onClick={() => {
+                        setInformationModalOpen(true);
+                        setShips(person.vehicles);
+                      }}
+                    >
                       {" "}
                       <FlightTakeoffOutlinedIcon />{" "}
                     </IconButton>
@@ -98,12 +106,23 @@ const DenseTable = () => {
         More heros
       </Button>
       <InformationModal
+        vehicles={ships}
         isOpen={informationModalOpen}
         onClose={() => {
           setInformationModalOpen(false);
         }}
       />
-    </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={errorMessage !== ""}
+        autoHideDuration={1000}
+        onClose={() => setErrorMessage("")}
+        message={errorMessage}
+      />
+    </React.Fragment>
   );
 };
 

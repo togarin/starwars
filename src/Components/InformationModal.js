@@ -1,26 +1,39 @@
-import React, {useState} from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
 
-const InformationModal=({isOpen, onClose})=> {
+const InformationModal = ({ isOpen, onClose, vehicles }) => {
+
+  console.log(vehicles);
+
   return (
-    <div>
+    <React.Fragment>
       <Dialog
         open={isOpen}
         onClose={onClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Specifications of starship"}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText>
+          {vehicles.map((ship, index) => (
+          <List component="nav" aria-label="specifications" key={index}>
+            <ListItem >
+              <ListItemText>{ship} </ListItemText>
+            </ListItem>
+          </List>
+
+          ))}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">
@@ -28,8 +41,8 @@ const InformationModal=({isOpen, onClose})=> {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
-}
+};
 
-export default  InformationModal;
+export default InformationModal;
