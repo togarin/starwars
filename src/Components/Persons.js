@@ -47,7 +47,7 @@ const DenseTable = () => {
   }, [count, apiUrl]);
 
   return (
-    <React.Fragment>
+    <>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -87,7 +87,7 @@ const DenseTable = () => {
       <Button variant="outlined" onClick={() => setCount(count + 1)}>
         More heros
       </Button>
-      {Boolean(ships) && (
+      {!!ships && (
         <InformationModal
           vehicles={ships}
           onSetErrorMessage={setErrorMessage}
@@ -107,7 +107,7 @@ const DenseTable = () => {
         onClose={() => setErrorMessage("")}
         message={errorMessage}
       />
-    </React.Fragment>
+    </>
   );
 };
 

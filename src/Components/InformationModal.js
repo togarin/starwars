@@ -8,9 +8,10 @@ import {
 } from "@material-ui/core";
 import VehicleSpecification from "../Components/VehicleSpecification";
 
-const InformationModal = ({ isOpen, onClose, vehicles, onSetErrorMessage }) => {
+const InformationModal = (props) => {
+  const { isOpen, onClose, vehicles, onSetErrorMessage } = props;
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={isOpen}
         onClose={onClose}
@@ -36,7 +37,7 @@ const InformationModal = ({ isOpen, onClose, vehicles, onSetErrorMessage }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 };
 

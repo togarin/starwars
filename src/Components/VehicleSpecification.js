@@ -3,7 +3,8 @@ import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
 import axios from "axios";
 import { catchMessages } from "../utils";
 
-const VehicleSpecification = ({ apiVehicleUrl, onSetErrorMessage }) => {
+const VehicleSpecification = (props) => {
+  const { apiVehicleUrl, onSetErrorMessage } = props;
   const [vehicle, setVehicle] = useState(null);
 
   useEffect(() => {
