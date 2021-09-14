@@ -8,6 +8,7 @@ In the project directory, you can run:
 
 ### `yarn start`
 
+<<<<<<< HEAD
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -68,3 +69,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+Приложение имеет следующий функционал:  
+- Получает по API список героев саги и их характеристики (выбраны на мое усмотрение).  
+- В модальном окне у каждого героя можно раскрыть информацию о его транспорте используя свойство vehicles (характеристики выбраны на мое усмотрение).  
+>>>>>>> ec8c10e5845155aab3f81ab718024f9954def33e
