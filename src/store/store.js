@@ -10,12 +10,12 @@ import {
 class Data {
   people = observable([]);
   character = null;
-
+  searchString = "";
   constructor() {
     makeAutoObservable(this);
     this.fetchPeoples();
-    this.fetchCharacter();
   }
+
   async fetchPeoples() {
     try {
       const response = await axios.get(`${PATH_BASE}${PATH_COMMON}${PATH_END}`);
@@ -25,6 +25,7 @@ class Data {
       console.log(error);
     }
   }
+
   async fetchCharacter(id) {
     try {
       const response = await axios.get(
@@ -35,6 +36,16 @@ class Data {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  setSearchString(v) {
+    this.searchString = v;
+  }
+
+  get resultList() {
+    return this.people.filter((p) =>
+      p.name.toLowerCase().includes(this.searchString.toLowerCase())
+    );
   }
 }
 export default new Data();
