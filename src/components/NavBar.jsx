@@ -20,6 +20,11 @@ const NavBar = observer(() => {
   const classes = useNavBarStyles();
   const [isVisible, setIsVisible] = useState(false);
 
+  const handleReset = () => {
+    setIsVisible(false);
+    Data.resetSearchString();
+  };
+
   return (
     <div className={classes.grow}>
       <AppBar position="fixed">
@@ -47,22 +52,13 @@ const NavBar = observer(() => {
                 ),
                 endAdornment: isVisible ? (
                   <InputAdornment position="start">
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        setIsVisible(false);
-                        Data.resetSearchString();
-                      }}
-                    >
+                    <IconButton size="small" onClick={handleReset}>
                       <CancelIcon />
                     </IconButton>
                   </InputAdornment>
                 ) : null,
               }}
-              onBlur={() => {
-                setIsVisible(false);
-                Data.resetSearchString();
-              }}
+              onBlur={handleReset}
             />
           </div>
           <div className={classes.grow} />
