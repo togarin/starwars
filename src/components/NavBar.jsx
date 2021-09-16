@@ -1,19 +1,24 @@
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
   IconButton,
   Typography,
-  InputBase,
   Badge,
+  InputAdornment,
+  TextField,
 } from "@material-ui/core/";
 import SearchIcon from "@material-ui/icons/Search";
-import StarsIcon from "@material-ui/icons/Stars";
+import CancelIcon from "@material-ui/icons/Cancel";
+
+import StarsIcon from "@material-ui/icons/Star";
 import { useNavBarStyles } from "../styles/styles";
 import { observer } from "mobx-react-lite";
 import Data from "../store/store";
 
 const NavBar = observer(() => {
   const classes = useNavBarStyles();
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <div className={classes.grow}>
@@ -23,17 +28,40 @@ const NavBar = observer(() => {
             Material-UI
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
+            <TextField
               placeholder="Live search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
+              value={Data.searchString}
+              // classes={{
+              //   root: classes.inputRoot,
+              //   input: classes.inputInput,
+              // }}
               onChange={(e) => {
                 Data.setSearchString(e.target.value);
+                setIsVisible(true);
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: isVisible ? (
+                  <InputAdornment position="start">
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        setIsVisible(false);
+                        Data.resetSearchString();
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ) : null,
+              }}
+              onBlur={() => {
+                setIsVisible(false);
+                Data.resetSearchString();
               }}
             />
           </div>

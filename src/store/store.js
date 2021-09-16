@@ -42,6 +42,10 @@ class Data {
     this.searchString = v;
   }
 
+  resetSearchString() {
+    this.setSearchString("");
+  }
+
   get resultList() {
     return this.people.filter((p) =>
       p.name.toLowerCase().includes(this.searchString.toLowerCase())
